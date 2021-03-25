@@ -39,6 +39,8 @@ public class MapView extends View {
     private RectF totalRect;
     //被选中的省
     private ProviceItem select;
+    //是否XML已经加载完毕
+    private boolean inEnd=false;
 
 
     public MapView(Context context) {
@@ -157,6 +159,8 @@ public class MapView extends View {
                 //将颜色设置给每个省份的封装对象
                 itemList.get(i).setDrawColor(color);
             }
+            inEnd=true;
+            measure(getMeasuredWidth(),getMeasuredHeight());
             postInvalidate();
         }
     };
@@ -168,6 +172,9 @@ public class MapView extends View {
      */
     @Override
     protected void onDraw(Canvas canvas) {
+        if(!inEnd){
+            return;
+        }
         //先判断itemList是否Wie空
         if(itemList!=null && itemList.size()>0){
             canvas.save();
